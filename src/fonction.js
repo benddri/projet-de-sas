@@ -75,3 +75,25 @@ export function enregistrerResultat(list,idApprennant,resultats){
     return true;
 
 }
+export function rechercherApprenant(list,nom,id,ville){
+    for(let i = 0; i < list.length; i++){
+        if(id !== undefined && list[i].id === id)
+            { return list[i];
+        }
+        if(nom !== undefined && list[i].nomComplet === nom){
+            return list[i];
+        }
+        if(ville !== undefined && list[i].ville === ville){
+            return list[i];
+        }
+    }
+    return null;
+
+
+
+
+}
+export function calculerProgression(apprenant){
+
+    
+}
