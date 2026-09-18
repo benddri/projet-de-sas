@@ -1,3 +1,4 @@
+import {apprenants} from "./data.js";
 export function normaliserNom(nom){
     return nom.trim().toLowerCase();
 }
@@ -24,9 +25,22 @@ export function validerResultat(resultat){
     }
     //verifier challange
     if(typeof resultat.challengeTermine!=="boolean"){
-        return "chalenge doit etre true ou fanse"
+        return "chalenge doit etre true ou false"
     }
     return true;
+
+}
+
+export function afficherApprenants() {
+
+    apprenants.forEach((apprenant) => {
+
+    console.log("ID :", apprenant.id);
+    console.log("nom complet :", apprenant.nomComplet);
+    console.log("nom ville :", apprenant.ville);
+    console.log("--------------------");
+
+    });
 }
 export function ajouterApprenant(list,id,nomComplet,ville){
     //verifier id
@@ -67,10 +81,12 @@ export function enregistrerResultat(list,idApprennant,resultats){
     }
     if(apprenantstrouve === null )
         return"apprenant introuvable";
+
     const validation = validerResultat(resultats)
     if(validation !== true){
         return validation
     }
+
     apprenantstrouve.resultats.push(resultats)
     return true;
 
@@ -94,6 +110,26 @@ export function rechercherApprenant(list,nom,id,ville){
 
 }
 export function calculerProgression(apprenant){
+let totalExercices=0
+let exercicesTermines=0
+let challengeTermine=0
+for(let i=0;i<apprenant.resultats.length;i++){
+    totalExercices+=apprenant.resultats[i].totalExercices
+    exercicesTermines+=apprenant.resultats[i].exercicesTermines
+    if(apprenant.resultats[i].challengeTermine===true){
+        challengeTermine++
+    }
 
-    
 }
+let progression=0
+if(totalExercices>0){
+    progression=((exercicesTermines/totalExercices)*100).toFixed(2)
+}
+return{ totalExercices:totalExercices,
+    exercicesTermines:exercicesTermines,
+    challengeTermine:challengeTermine,
+    progression:progression
+
+};
+}
+
