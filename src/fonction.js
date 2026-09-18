@@ -1,6 +1,7 @@
 import {apprenants} from "./data.js";
 export function normaliserNom(nom){
-    return nom.trim().toLowerCase();
+    return nom.trim().toLowerCase().replace(/\s+/g, " ");
+    
 }
 export function validerResultat(resultat){
     //verifier objet
@@ -42,35 +43,32 @@ export function afficherApprenants() {
 
     });
 }
-export function ajouterApprenant(list,id,nomComplet,ville){
-    //verifier id
-    if(typeof id!=="number"||id<=0){
-        return"identifiant doit etre un number";
-    }
-    //verifier nom et ville
-    if(typeof nomComplet!=="string"||nomComplet.trim()===""){
-        return "nomComplet est invalide"
-    }
-    if(typeof ville!=="string"||ville.trim()===""){
-        return"ville invalide "
-    }
-    //verifie id s'il deja exest
-    for(let i=0;i<list.length;i++){
-        if(list[i].id===id){
-            return"erreur"
-        }
-    }
-    const novelApprennant={
-        id:id,
-        nomComplet:nomComplet.trim(),
-        ville:ville.trim(),
-        resultats:[]
-    };
-    list.push(novelApprennant)
-    return true
 
+export function ajouterApprenant(apprenant) {
 
+if (!apprenant || typeof apprenant !== "object") {
+        return "Apprenant invalide";
+    }
+
+if (typeof apprenant.id !== "number" || apprenant.id <= 0) {
+        return "ID invalide";
+    }
+
+if (typeof apprenant.nomComplet !== "string" || apprenant.nomComplet.trim() === "") {
+        return "Nom invalide";
+    }
+
+if (typeof apprenant.ville !== "string" || apprenant.ville.trim() === "") {
+        return "Ville invalide";
+    }
+
+    apprenant.nomComplet = apprenant.nomComplet.trim();
+    apprenant.ville = apprenant.ville.trim();
+
+    return true;
 }
+
+
 export function enregistrerResultat(list,idApprennant,resultats){
     let apprenantstrouve=null;
     for(let i=0;i < list.length;i++){
@@ -104,32 +102,4 @@ export function rechercherApprenant(list,nom,id,ville){
         }
     }
     return null;
-
-
-
-
 }
-export function calculerProgression(apprenant){
-let totalExercices=0
-let exercicesTermines=0
-let challengeTermine=0
-for(let i=0;i<apprenant.resultats.length;i++){
-    totalExercices+=apprenant.resultats[i].totalExercices
-    exercicesTermines+=apprenant.resultats[i].exercicesTermines
-    if(apprenant.resultats[i].challengeTermine===true){
-        challengeTermine++
-    }
-
-}
-let progression=0
-if(totalExercices>0){
-    progression=((exercicesTermines/totalExercices)*100).toFixed(2)
-}
-return{ totalExercices:totalExercices,
-    exercicesTermines:exercicesTermines,
-    challengeTermine:challengeTermine,
-    progression:progression
-
-};
-}
-
