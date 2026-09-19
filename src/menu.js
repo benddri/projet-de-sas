@@ -5,7 +5,8 @@ import {
     validerResultat,
     ajouterApprenant,
     enregistrerResultat,
-    rechercherApprenant,
+    consulterParId,
+    rechercherParNom,
     afficherApprenants,
 
 }from"./fonction.js";
@@ -34,27 +35,27 @@ switch(choix){
     console.log("tableau de bord");
     break;
     case"2":
-    afficherApprenants(apprenants)
+   afficherApprenants(apprenants)//afficher des apprenant
     break;
     case "3":
-    ajouterApprenant()
+    ajouterApprenant()//ajouter apprenant
     break;
     case "4":
-    const idRecherche = Number(
-    prompt("entrer id  ")
-    )
-    console.log(rechercherApprenant(apprenants,undefined,idRecherche))
+        consulterParId()// consolter par id
         break;
     case "5":
-        
-    
-
+      enregistrerResultat()  //ajouter,modefier resultat
     break;
+    case "6":
+    rechercherParNom()
+    break;
+    case "7":
+
     
-        case "0":
-            console.log("quitter")
-            running=false
-            break;
+    case "0":
+      console.log("quitter")
+        running=false
+      break;
         default:  
         console.log("choix invalide") } 
 

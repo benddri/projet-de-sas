@@ -1,8 +1,14 @@
-import {apprenants} from "./data.js";
-export function normaliserNom(nom){
-    return nom.trim().toLowerCase().replace(/\s+/g, " ");
-    
+export function normaliserNom(nom) {
+  if (typeof nom !== "string") {
+    return "";
+  }
+
+  return nom
+    .trim()
+    .toLowerCase()
+    .replace(/\s+/g, " ");
 }
+
 export function validerResultat(resultat){
     //verifier objet
     if(!resultat || typeof resultat !== "object"){
@@ -31,75 +37,144 @@ export function validerResultat(resultat){
     return true;
 
 }
+import PromptSync from "prompt-sync";
+import { apprenants } from "./data.js";
 
-export function afficherApprenants() {
+const prompt = PromptSync();
+export function ajouterApprenant() {2
+    let nomComplet = prompt("Veuillez saisir votre nom complet : ");
 
-    apprenants.forEach((apprenant) => {
-
-    console.log("ID :", apprenant.id);
-    console.log("nom complet :", apprenant.nomComplet);
-    console.log("nom ville :", apprenant.ville);
-    console.log("--------------------");
-
-    });
-}
-
-export function ajouterApprenant(apprenant) {
-
-if (!apprenant || typeof apprenant !== "object") {
-        return "Apprenant invalide";
+    while (!nomComplet || nomComplet.trim() === "") {
+        console.log("Veuillez saisir un nom validé");
+        nomComplet = prompt("Veuillez saisir votre nom complet : ");
     }
 
-if (typeof apprenant.id !== "number" || apprenant.id <= 0) {
-        return "ID invalide";
+    let ville = prompt("entrer ta ville: ");
+
+    while (!ville || ville.trim() === "") {
+        console.log("Veuillez saisir une ville validé");
+        ville = prompt("Veuillez saisir votre ville : ");
     }
 
-if (typeof apprenant.nomComplet !== "string" || apprenant.nomComplet.trim() === "") {
-        return "Nom invalide";
-    }
 
-if (typeof apprenant.ville !== "string" || apprenant.ville.trim() === "") {
-        return "Ville invalide";
-    }
+    // Chercher le plus grand ID
+    let nouvelId = 0;
 
-    apprenant.nomComplet = apprenant.nomComplet.trim();
-    apprenant.ville = apprenant.ville.trim();
-
-    return true;
-}
-
-
-export function enregistrerResultat(list,idApprennant,resultats){
-    let apprenantstrouve=null;
-    for(let i=0;i < list.length;i++){
-        if(list[i].id===idApprennant){
-            apprenantstrouve = list[i]
-            break
+    for (let apprenant of apprenants) {
+        if (apprenant.id > nouvelId) {
+            nouvelId = apprenant.id;
         }
     }
-    if(apprenantstrouve === null )
-        return"apprenant introuvable";
 
-    const validation = validerResultat(resultats)
-    if(validation !== true){
-        return validation
+    // Ajouter 1 au plus grand ID
+    nouvelId++;
+
+    let apprenant = {
+        id: nouvelId,
+        nomComplet: normaliserNom(nomComplet),
+        ville: ville.charAt(0).toUpperCase() + ville.slice(1),
+        resultats: []
+    };
+
+    apprenants.push(apprenant);
+
+    console.log(`le nouveau apprenants est crié avec l'Id : ${apprenant.id}`)
+} 
+export function enregistrerResultat() {
+    let id = Number(prompt("Veuillez saisir l'ID de l'apprenant : "));
+    let apprenant = null;
+    for (let i = 0; i < apprenants.length; i++) {
+        if (apprenants[i].id === id) {
+            apprenant = apprenants[i];
+            break;
+        }
     }
+    if (!apprenant) {
+        console.log("Apprenant n'existe pas");
+        return;
+    }
+    let jour = Number(prompt("Veuillez saisir le jour (1-7) : "));
+    let exercicesTermines = Number(prompt("Nombre d'exercices terminés : "));
+    let totalExercices = Number(prompt("Nombre total d'exercices : "));
+    let challengeTermine = prompt("Challenge terminé ? (true/false) : ") === "true";
+    const resultat = {
+        jour: jour,
+        exercicesTermines: exercicesTermines,
+        totalExercices: totalExercices,
+        challengeTermine: challengeTermine
+    };
+    const validation = validerResultat(resultat);
+    if (validation !== true) {
+        console.log(validation);
+        return;
+    }
+    let trouve = false;
 
-    apprenantstrouve.resultats.push(resultats)
-    return true;
-
-}
-export function rechercherApprenant(list,nom,id,ville){
-    for(let i = 0; i < list.length; i++){
-        if(id !== undefined && list[i].id === id)
-            { return list[i];
-        }
-        if(nom !== undefined && list[i].nomComplet === nom){
-            return list[i];
-        }
-        if(ville !== undefined && list[i].ville === ville){
-            return list[i];
+    for (let i = 0; i < apprenant.resultats.length; i++) {
+        if (apprenant.resultats[i].jour === resultat.jour) {
+            apprenant.resultats[i] = resultat;
+            trouve = true;
+            break;
         }
     }
-    return null;
+    if (!trouve) {
+        apprenant.resultats.push(resultat);
+    }
+    console.log("Resultat enregistre ");
 }
+export function consulterParId(){
+    let id=Number(prompt("entrer voutre ID :"))
+    for(let apprenant of apprenants){
+        if(apprenant.id===id){
+            console.log(apprenant)
+            return apprenant
+        }
+    }
+    console.log("apprenant introuvable")
+    return null
+}
+export function  rechercherParNom() {
+    let nom=prompt("entrer voutre nom :")
+    const nomRecherche =normaliserNom(nom)
+    for(let apprenant of apprenants){
+        const nomApprenant=normaliserNom(apprenant.nomComplet)
+        if(nomApprenant.includes(nomRecherche)){
+            console.log(apprenant)
+            return apprenant
+        }
+    }
+    console.log("Apprenant introvable")
+    return null
+}
+
+export function afficherApprenants(apprenants) {
+ for (let i = 0; i < apprenants.length; i++) {
+     console.log(apprenants[i]);
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
