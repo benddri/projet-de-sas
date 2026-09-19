@@ -9,6 +9,12 @@ export function normaliserNom(nom) {
     .replace(/\s+/g, " ");
 }
 
+export function afficherApprenants(apprenants) {
+ for (let i = 0; i < apprenants.length; i++) {
+     console.log(apprenants[i]);
+    }
+}
+
 export function validerResultat(resultat){
     //verifier objet
     if(!resultat || typeof resultat !== "object"){
@@ -106,10 +112,8 @@ export function enregistrerResultat() {
     const validation = validerResultat(resultat);
     if (validation !== true) {
         console.log(validation);
-        return;
-    }
+        return;}
     let trouve = false;
-
     for (let i = 0; i < apprenant.resultats.length; i++) {
         if (apprenant.resultats[i].jour === resultat.jour) {
             apprenant.resultats[i] = resultat;
@@ -146,12 +150,47 @@ export function  rechercherParNom() {
     console.log("Apprenant introvable")
     return null
 }
-
-export function afficherApprenants(apprenants) {
- for (let i = 0; i < apprenants.length; i++) {
-     console.log(apprenants[i]);
-    }
+export function trierParalphabe(){
+    apprenants.sort((a,b)=>a.nomComplet.localeCompare(b.nomComplet));
+    console.log(apprenants)
+    return apprenants
 }
+export function calulerProgrission(apprenant){
+    let exercicesTermines=0
+    let totalExercices=0
+    for(let resultat of apprenant.resultats){
+        totalExercices +=resultat.totalExercices
+        exercicesTermines += resultat.exercicesTermines
+    }
+    if( totalExercices === 0){
+        return 0
+    }
+    return (exercicesTermines / totalExercices)*100
+
+    
+
+}
+export function trierParProgression(){     //Trier par progression décroissante
+    apprenants.sort((a,b)=>
+        calulerProgrission(b)-calulerProgrission(a)
+    );
+    for(let apprenant of apprenants){
+        let exercicesTermines=0
+        let totalExercices=0
+        for(let resultat of apprenant.resultats){
+            exercicesTermines +=resultat.exercicesTermines
+            totalExercices += resultat.totalExercices
+        }
+
+        let progression=calulerProgrission(apprenant).toFixed(2)
+        console.table(`${apprenant.nomComplet} : ${exercicesTermines}/${totalExercices} exercices,progression ${progression} %`)
+    }
+
+    return apprenants
+}
+
+
+
 
 
 

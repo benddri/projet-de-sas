@@ -8,6 +8,8 @@ import {
     consulterParId,
     rechercherParNom,
     afficherApprenants,
+    trierParalphabe,
+    trierParProgression,
 
 }from"./fonction.js";
 const prompt = PromptSync();
@@ -50,6 +52,14 @@ switch(choix){
     rechercherParNom()
     break;
     case "7":
+
+     break;
+    case "8":
+        trierParProgression()
+     break;
+     case "9":
+       trierParalphabe()
+     break;
 
     
     case "0":

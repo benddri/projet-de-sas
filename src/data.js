@@ -34,7 +34,7 @@ export const apprenants = [
     nomComplet: "hind code",
     ville: "nador",
     resultats: [
-      { jour: 4,
+      { jour: 1,
         exercicesTermines: 7,
         totalExercices: 10, challengeTermine: false }
     ]
@@ -44,9 +44,9 @@ export const apprenants = [
     nomComplet: "ahmed web",
     ville: "marrakech",
     resultats: [
-      { jour: 6,
+      { jour: 1,
         exercicesTermines: 17,
-        totalExercices: 10,
+        totalExercices: 20,
          challengeTermine: true }
     ]
   },
@@ -55,7 +55,7 @@ export const apprenants = [
     nomComplet: "ali ali",
     ville: "taza",
     resultats: [
-      { jour: 5,
+      { jour: 1,
         exercicesTermines: 8,
         totalExercices: 18, 
         challengeTermine: false }
@@ -66,7 +66,7 @@ export const apprenants = [
     nomComplet: "youssef sef",
     ville: "sale",
     resultats: [
-      { jour: 6,
+      { jour: 1,
         exercicesTermines: 7,
         totalExercices: 10, challengeTermine: false }
     ]
@@ -74,9 +74,29 @@ export const apprenants = [
      {
     id:8,
     nomComplet: "douae do",
-    ville: "fas",
+    ville: "safi",
     resultats: [
-      { jour: 4,
+      { jour: 1,
+        exercicesTermines: 7,
+        totalExercices: 10, challengeTermine: false }
+    ]
+  },
+  {
+    id:9,
+    nomComplet: "hanan web",
+    ville: "meknas",
+    resultats: [
+      { jour: 1,
+        exercicesTermines: 10,
+        totalExercices: 15, challengeTermine: true }
+    ]
+  },
+   {
+    id:10,
+    nomComplet: "doha karkach",
+    ville: "nador",
+    resultats: [
+      { jour: 1,
         exercicesTermines: 7,
         totalExercices: 10, challengeTermine: false }
     ]
