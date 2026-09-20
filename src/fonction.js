@@ -155,39 +155,61 @@ export function trierParalphabe(){
     console.log(apprenants)
     return apprenants
 }
-export function calulerProgrission(apprenant){
+export function calculerProgression(apprenant){
+    if(!apprenant || !apprenant.resultats){
+        return null
+    }
     let exercicesTermines=0
     let totalExercices=0
-    for(let resultat of apprenant.resultats){
-        totalExercices +=resultat.totalExercices
-        exercicesTermines += resultat.exercicesTermines
+    let challengeTermine=0
+    for(let i=0;i< apprenant.resultats.length;i++){
+        const jour=apprenant.resultats[i]
+        totalExercices += jour.totalExercices
+        exercicesTermines += jour.exercicesTermines
+        if(jour.challengeTermine === true){
+            challengeTermine ++
+        }
     }
-    if( totalExercices === 0){
-        return 0
-    }
-    return (exercicesTermines / totalExercices)*100
-
-    
-
-}
-export function trierParProgression(){     //Trier par progression décroissante
-    apprenants.sort((a,b)=>
-        calulerProgrission(b)-calulerProgrission(a)
-    );
-    for(let apprenant of apprenants){
-        let exercicesTermines=0
-        let totalExercices=0
-        for(let resultat of apprenant.resultats){
-            exercicesTermines +=resultat.exercicesTermines
-            totalExercices += resultat.totalExercices
+        let progression = 0
+        if(totalExercices > 0 ){
+            progression= ((exercicesTermines / totalExercices)*100).toFixed(2)
+        }
+      let niveau = "À renforcer";
+       if (progression >= 80) {
+        niveau = "Solide";
+        } else if (progression >= 50) {
+          niveau = "En progression";
         }
 
-        let progression=calulerProgrission(apprenant).toFixed(2)
-        console.table(`${apprenant.nomComplet} : ${exercicesTermines}/${totalExercices} exercices,progression ${progression} %`)
+    
+    return{
+        exercicesTermines: exercicesTermines,
+        totalExercices:totalExercices,
+        progression:progression,
+        challengeTermine:challengeTermine,
+        niveau:niveau
+    }
+}
+
+export function trierParProgression(){     //Trier par progression décroissante
+    apprenants.sort(function(a,b){
+        const progressionA= calculerProgression(a)
+         const progressionB= calculerProgression(b)
+         return progressionB.progression -progressionA.progression
+    })
+       for(let i= 0;i< apprenants.length;i++){
+
+        let prog =calculerProgression(apprenants[i])
+        console.log(apprenants[i].nomComplet + " : "+ prog.progression +"%")
+   
+    
     }
 
     return apprenants
 }
+
+
+        
 
 
 

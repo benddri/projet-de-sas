@@ -11,63 +11,56 @@ import {
     trierParalphabe,
     trierParProgression,
 
+
 }from"./fonction.js";
 const prompt = PromptSync();
-let choix
 let running=true
+
 do{
-console.log("   SAS PROGRESS CONSOLE     ");
+console.log("\n======== SAS PROGRESS CONSOLE ========  ");
 
-console.log("1,afficher le tableau de bord");
-console.log("2.la liste des apprenants");
-console.log("3. Ajouter un apprennant");
-console.log("4.Consulter un apprenant par identifiant ");
-console.log("5.Ajouter ou modifier le résultat d'une journée")
-console.log("6.Rechercher un apprenant par nom")
-console.log("7.Filtrer les apprenants par niveau")
-console.log("8. Trier les apprenants par progression décroissante")
-console.log("9. Trier les apprenants par ordre alphabétique")
-console.log("0. Quitter");
+console.log("1.   la liste des apprenants");
+console.log("2.   Ajouter un apprennant");
+console.log("3.   Consulter un apprenant par identifiant");
+console.log("4.   Ajouter ou modifier le résultat d'une journée");
+console.log("5.   Rechercher un apprenant par nom")
+console.log("6.   Trier les apprenants par progression décroissante")
+console.log("7.   Trier les apprenants par ordre alphabétique")
+console.log("0.  Quitter");
 
 
-
- choix = prompt("votre choix : ");
+let  choix = prompt("votre choix : ");
 switch(choix){
     case "1":
-    console.log("tableau de bord");
+    afficherApprenants(apprenants)//afficher des apprenant
     break;
     case"2":
-   afficherApprenants(apprenants)//afficher des apprenant
+     ajouterApprenant()//ajouter apprenant
     break;
+
     case "3":
-    ajouterApprenant()//ajouter apprenant
+        consulterParId()// consolter par id
     break;
     case "4":
-        consulterParId()// consolter par id
-        break;
+       enregistrerResultat()  //ajouter,modefier resultat
+    break;
     case "5":
-      enregistrerResultat()  //ajouter,modefier resultat
+      rechercherParNom()
     break;
     case "6":
-    rechercherParNom()
+        trierParProgression()
+
     break;
     case "7":
-
+         trierParalphabe()// trier par alphabit
      break;
-    case "8":
-        trierParProgression()
-     break;
-     case "9":
-       trierParalphabe()
-     break;
-
     
     case "0":
-      console.log("quitter")
-        running=false
-      break;
-        default:  
-        console.log("choix invalide") } 
+    console.log("quitter")
+    running =false
+    break;
+    default:  
+    console.log("choix invalide") } 
 
 
 }while (running);
