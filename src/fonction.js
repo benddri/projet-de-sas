@@ -71,8 +71,6 @@ export function ajouterApprenant() {2
             nouvelId = apprenant.id;
         }
     }
-
-    // Ajouter 1 au plus grand ID
     nouvelId++;
 
     let apprenant = {
@@ -150,11 +148,18 @@ export function  rechercherParNom() {
     console.log("Apprenant introvable")
     return null
 }
+
+
+
 export function trierParalphabe(){
     apprenants.sort((a,b)=>a.nomComplet.localeCompare(b.nomComplet));
     console.log(apprenants)
     return apprenants
 }
+
+
+
+
 export function calculerProgression(apprenant){
     if(!apprenant || !apprenant.resultats){
         return null
@@ -195,7 +200,7 @@ export function trierParProgression(){     //Trier par progression décroissante
     apprenants.sort(function(a,b){
         const progressionA= calculerProgression(a)
          const progressionB= calculerProgression(b)
-         return progressionB.progression -progressionA.progression
+         return progressionB.progression - progressionA.progression
     })
        for(let i= 0;i< apprenants.length;i++){
 
