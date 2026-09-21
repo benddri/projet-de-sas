@@ -49,7 +49,7 @@ const prompt = PromptSync();
 export function ajouterApprenant() {
     let nomComplet = prompt("Veuillez saisir votre nom complet : ");
 
-    while (!nomComplet || nomComplet.trim() === "") {
+    while (!nomComplet || nomComplet.trim() === "" || typeof nomComplet !=="string") {
         console.log("Veuillez saisir un nom validé");
         nomComplet = prompt("Veuillez saisir votre nom complet : ");
     }
