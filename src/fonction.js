@@ -46,7 +46,7 @@ import PromptSync from "prompt-sync";
 import { apprenants } from "./data.js";
 
 const prompt = PromptSync();
-export function ajouterApprenant() {2
+export function ajouterApprenant() {
     let nomComplet = prompt("Veuillez saisir votre nom complet : ");
 
     while (!nomComplet || nomComplet.trim() === "") {
