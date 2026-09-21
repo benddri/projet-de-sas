@@ -6,7 +6,6 @@ export function normaliserNom(nom) {
   return nom
     .trim()
     .toLowerCase()
-    .replace(/\s+/g, " ");
 }
 
 export function afficherApprenants(apprenants) {
@@ -180,11 +179,7 @@ export function calculerProgression(apprenant){
             progression= ((exercicesTermines / totalExercices)*100).toFixed(2)
         }
       let niveau = "À renforcer";
-       if (progression >= 80) {
-        niveau = "Solide";
-        } else if (progression >= 50) {
-          niveau = "En progression";
-        }
+
 
     
     return{
