@@ -178,9 +178,6 @@ export function calculerProgression(apprenant){
         if(totalExercices > 0 ){
             progression= ((exercicesTermines / totalExercices)*100).toFixed(2)
         }
-      let niveau = "À renforcer";
-
-
     
     return{
         exercicesTermines: exercicesTermines,
