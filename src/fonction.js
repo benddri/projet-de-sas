@@ -184,7 +184,7 @@ export function calculerProgression(apprenant){
         totalExercices:totalExercices,
         progression:progression,
         challengeTermine:challengeTermine,
-        niveau:niveau
+       
     }
 }
 
